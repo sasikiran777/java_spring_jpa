@@ -9,5 +9,5 @@ public interface BooksService {
 
     public List<Books> list();
 
-    public Books save(Map<String, ?> data);
+    public Books save(Map<String, ?> data) throws Exception;
 }

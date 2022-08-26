@@ -31,4 +31,8 @@ public class Books {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    private Authors authors;
+
 }
