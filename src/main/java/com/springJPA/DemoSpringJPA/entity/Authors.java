@@ -30,6 +30,6 @@ public class Authors {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @ManyToOne
-    private Books books;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "authors")
+    private List<Books> books;
 }
