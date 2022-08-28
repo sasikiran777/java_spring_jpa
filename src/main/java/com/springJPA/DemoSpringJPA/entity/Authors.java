@@ -1,5 +1,6 @@
 package com.springJPA.DemoSpringJPA.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "books"})
 public class Authors {
     @Id
     @SequenceGenerator(name = "author_sequence", allocationSize = 1, sequenceName = "author_sequence")
@@ -30,6 +32,6 @@ public class Authors {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "authors")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "authors", fetch = FetchType.LAZY)
     private List<Books> books;
 }

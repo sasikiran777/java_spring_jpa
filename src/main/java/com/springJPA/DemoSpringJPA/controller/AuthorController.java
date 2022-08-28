@@ -1,7 +1,10 @@
 package com.springJPA.DemoSpringJPA.controller;
 
+import com.springJPA.DemoSpringJPA.dto.AuthorsDTO;
 import com.springJPA.DemoSpringJPA.entity.Authors;
 import com.springJPA.DemoSpringJPA.service.AuthorServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +18,10 @@ public class AuthorController {
     @Autowired
     AuthorServiceImpl authorService;
 
+    Logger logger = LoggerFactory.getLogger(AuthorController.class);
+
     @GetMapping("/list")
-    public List<Authors> list() {
+    public List<AuthorsDTO> list() {
         return authorService.list();
     }
 

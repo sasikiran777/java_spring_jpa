@@ -1,14 +1,17 @@
 package com.springJPA.DemoSpringJPA.service;
 
+import com.springJPA.DemoSpringJPA.dto.AuthorsDTO;
 import com.springJPA.DemoSpringJPA.entity.Authors;
 import com.springJPA.DemoSpringJPA.repository.AuthorRepository;
 import com.springJPA.DemoSpringJPA.service.interfaces.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -19,8 +22,12 @@ public class AuthorServiceImpl implements AuthorService {
     @Autowired
     UserServiceImpl userService;
 
-    public List<Authors> list() {
-        return authorRepository.findAll();
+    public List<AuthorsDTO> list() {
+        return (authorRepository
+                .findAll())
+                .stream()
+                .map(this::convertDataIntoDTO)
+                .collect(Collectors.toList());
     }
 
     public Authors save(Map<String, ?> requestBody) {
@@ -33,5 +40,19 @@ public class AuthorServiceImpl implements AuthorService {
 
     public Optional<Authors> findById (Long id) {
         return authorRepository.findById(id);
+    }
+
+    public AuthorsDTO convertDataIntoDTO (Authors authorData) {
+        // create instance of our UserLocationDTO class
+        AuthorsDTO dto = new AuthorsDTO();
+
+        //set username and userId in dto from the userData
+        dto.setId(authorData.getId());
+        dto.setName(authorData.getName());
+        dto.setAchievements(authorData.getAchievements());
+        dto.setNoOfBooks(authorData.getBooks().size());
+        dto.setCreatedAt(authorData.getCreatedAt());
+        dto.setUser(authorData.getUser());
+        return dto;
     }
 }
